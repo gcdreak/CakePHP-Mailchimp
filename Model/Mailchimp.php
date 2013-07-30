@@ -281,4 +281,31 @@ class Mailchimp extends MailchimpAppModel {
 		return $this->Mailchimp->listLocations($id);
 	}
 
+	/**
+	 * Save a segment against a list for later use. There is no limit 
+     * to the number of segments which can be saved. Static Segments are not 
+     * tied to any merge data, interest groups, etc. They essentially allow 
+     * you to configure an unlimited number of custom segments which will 
+     * have standard performance. When using proper segments, Static Segments 
+     * are one of the available options for segmentation just as if you used 
+     * a merge var (and they can be used with other segmentation options), 
+     * though performance may degrade at that point.
+	 *
+	 * @section List Related
+	 *
+	 * @param string $name a unique name per list for the segment - 50 byte maximum length, anything longer will throw an error
+	 * @param string $id the list id to connect to. Get by calling lists()
+	 * @return array array of locations
+	 * string country the country name
+	 * string cc the 2 digit country code
+	 * double percent the percent of subscribers in the country
+	 * double total the total number of subscribers in the country
+	 */
+	public function listStaticSegmentAdd($name, $id = null) {
+		if (!$id) {
+			$id = $this->settings['defaultListId'];
+		}
+		return $this->Mailchimp->listStaticSegmentAdd($id, $name);
+	}
+
 }
