@@ -41,9 +41,10 @@ class MailchimpSubscriber extends MailchimpAppModel {
 	 */
 	public function subscribe($queryData = array()) {
 		$response = $this->Mailchimp->listSubscribe($this->settings['defaultListId'], $queryData['email']);
+        
 		return $response;
 	}
-
+    
 	/**
 	 * @return boolean
 	 */

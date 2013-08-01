@@ -307,5 +307,31 @@ class Mailchimp extends MailchimpAppModel {
 		}
 		return $this->Mailchimp->listStaticSegmentAdd($id, $name);
 	}
+    
+    
+    /** 
+     *  Add list members to a static segment. It is suggested that you limit batch size 
+     *  to no more than 10,000 addresses per call. Email addresses must exist on the list
+     *  in order to be included - this <strong>will not</strong> subscribe them to the list!
+     *
+     * @section List Related
+     * 
+     * @param string $id the list id to connect to. Get by calling lists()
+     * @param int $seg_id the id of the static segment to modify - get from listStaticSegments()
+     * @param array $batch an array of email addresses and/or unique_ids to add to the segment
+     * @return array an array with the results of the operation
+                int success the total number of successful updates (will include members already in the segment)
+                array errors error data including:
+                    string email address the email address in question
+                    string code the error code
+                    string msg  the full error message
+     * @link description http://apidocs.mailchimp.com/api/1.3/liststaticsegmentmembersadd.func.php
+     */
+	public function listStaticSegmentMembersAdd($segId, $batch, $id = null) {
+		if (!$id) {
+			$id = $this->settings['defaultListId'];
+		}
+		return $this->Mailchimp->listStaticSegmentMembersAdd($id, $segId, $batch);
+	}
 
 }
