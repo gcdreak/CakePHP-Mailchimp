@@ -333,5 +333,28 @@ class Mailchimp extends MailchimpAppModel {
 		}
 		return $this->Mailchimp->listStaticSegmentMembersAdd($id, $segId, $batch);
 	}
+    
+    
+    /** Remove list members from a static segment. It is suggested that you limit batch size to no more than 10,000 addresses per call. Email addresses must exist on the list
+     *  in order to be removed - this <strong>will not</strong> unsubscribe them from the list!
+     *
+     * @section List Related
+     * 
+     * @param string $id the list id to connect to. Get by calling lists()
+     * @param int $seg_id the id of the static segment to delete - get from listStaticSegments()
+     * @param array $batch an array of email addresses and/or unique_ids to remove from the segment
+     * @return array an array with the results of the operation
+                int success the total number of succesful removals
+                array errors error data including:
+                    string email address the email address in question
+                    string code the error code
+                    string msg  the full error message
+     */
+	public function listStaticSegmentMembersDel($segId, $batch, $id = null) {
+		if (!$id) {
+			$id = $this->settings['defaultListId'];
+		}
+		return $this->Mailchimp->listStaticSegmentMembersDel($id, $segId, $batch);
+	}
 
 }
